@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios'; //Library used to make HTTP requests
+import axios from 'axios'; // Library to make HTTP requests
 
 function App() {
-  // The 2 consts below are useState hooks (basically, inputData is a variable that'll hold the value entered by the user, response will be the processed data from the backend)
-  const [selectedFile, setSelectedFile] = useState(null); // State to hold selected file
-  const [responseMessage, setResponseMessage] = useState(''); // State to display the response
-  
+  const [selectedFile, setSelectedFile] = useState(null);  // State to hold selected file
+  const [responseMessage, setResponseMessage] = useState('');  // State to display response
+
   const handleFileChange = (event) => { 
     setSelectedFile(event.target.files[0]);
   };
@@ -22,13 +21,13 @@ function App() {
     try {
       const response = await axios.post('http://localhost:5000/process', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      setResponseMessage(response.data.result);
+      setResponseMessage(response.data.result);  // Show the result
     } catch (error) {
       console.error('Error uploading image:', error);
-      setResponseMessage('Error processing image.');
+      setResponseMessage(`Error processing image: ${error.response ? error.response.data.error : error.message}`);
     }
   };
 
