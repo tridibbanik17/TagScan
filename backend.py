@@ -35,11 +35,15 @@ def get_tag_info(path):
     # Clean the output and parse it into JSON
     content_cleaned = content.strip("```json\n").strip("\n```")
     json_data = json.loads(content_cleaned)
+    json_string = json.dumps(json_data)  # json_string is converted to a string
+
+    error_message = {"message": "Image is not a laundry tag"}
+    error_msg = json.dumps(error_message)
 
     if json_data["is_tag"]:
-        return json_data
+        return json_string
     else:
-        return {"message": "Image is not a laundry tag"}
+        return error_msg
 
 
 @app.route('/process-image', methods=['POST'])
