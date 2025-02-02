@@ -161,17 +161,27 @@ To run flask_file.py:
   python flask_file.py
 ```
 
-Start the React frontend by running npm start.
+Start the React frontend by changing directory to frontend and running npm start and npm run dev.
 
-Run:
+To change directory to frontend, use:
+```bash
+  cd ../frontend
+```
+
+Run npm start:
+```bash 
+  npm start
+```
+
+Run npm run dev:
 ```bash
   npm run dev
 ```
 
-Click on the URL displayed in the terminal, which will open the frontend in your browser (http://localhost:3000).
+Click on the URL (for example, http://localhost:3000) displayed in the terminal, which will open the frontend in your browser.
 
 Select an image file and click "Upload Image."
-The result of the image processing (simulated in this example) will be displayed below the button.
+The result of the image processing will be displayed below the button.
 
 Future Enhancements
 Image Processing:
