@@ -22,7 +22,7 @@ def get_tag_info(path):
     Ensure that each icon's instructions are no more than two sentences.
     """
 
-    genai.configure(api_key="YOUR_API_KEY")  # Replace with your actual API key
+    genai.configure(api_key="AIzaSyAPfW7HmuKCBDWbNJSd_Ceh9VxbMWVhzYs")  # Gemini API key
 
     model = genai.GenerativeModel("gemini-1.5-flash")
 
