@@ -1,5 +1,5 @@
-# Google-Macathon
-TagScan - AI-Powered Cloth Tag Reader
+# TagScan - An AI-Powered Cloth Tag Reader
+
 This repository contains a Flask backend and a React frontend that work together to process image uploads. The backend receives images from the frontend, processes them, and returns results. The React frontend allows users to select and upload an image, receiving and displaying the backend's response.
 
 ## Project Structure
@@ -27,7 +27,7 @@ This repository contains a Flask backend and a React frontend that work together
    ```
 
 
-Run the Flask backend by executing the following:
+2. Run the Flask backend by executing the following:
 
     ```bash
         python app.py
@@ -38,13 +38,13 @@ The backend will start on http://localhost:5000.
 Frontend (React) Setup
 Ensure you have Node.js installed. If not, download and install it from here.
 
-Install the necessary frontend dependencies:
+3. Install the necessary frontend dependencies:
 
     ```bash
         npm install axios
       ```
 
-Start the React development server by running:
+4. Start the React development server by running:
 
 ```bash
     npm start
@@ -149,11 +149,30 @@ export default App;
 ```
 
 How to Use
-Start the Flask backend by running python app.py.
+Start the Flask backend by changing the directory to backend and running python flask_file.py.
+
+To change directory to backend, use:
+```bash
+  cd ./techFullStack/backend/
+```
+
+To run flask_file.py:
+```bash
+  python flask_file.py
+```
+
 Start the React frontend by running npm start.
-Open the frontend in your browser (http://localhost:3000).
+
+Run:
+```bash
+  npm run dev
+```
+
+Click on the URL displayed in the terminal, which will open the frontend in your browser (http://localhost:3000).
+
 Select an image file and click "Upload Image."
 The result of the image processing (simulated in this example) will be displayed below the button.
+
 Future Enhancements
 Image Processing:
 Replace the process_image function with actual image processing logic (e.g., integrating Gemini API or other image analysis tools).
