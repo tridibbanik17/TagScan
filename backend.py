@@ -60,7 +60,7 @@ def process_image():
     result = get_tag_info(image_path)
 
     # Clean up the temporary image file if necessary
-    # os.remove(image_path)  # Uncomment to remove the temporary file
+    os.remove(image_path)  # remove the temporary file
 
     return jsonify(result)
 
