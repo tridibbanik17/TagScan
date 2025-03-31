@@ -1,5 +1,4 @@
 <div align="center">
-
 <h3 align="center">TagScan</h3>
 
   <p align="center">
