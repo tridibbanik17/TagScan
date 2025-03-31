@@ -1,191 +1,124 @@
-# TagScan - An AI-Powered Cloth Tag Reader
+<div align="center">
 
-This repository contains a Flask backend and a React frontend that work together to process image uploads. The backend receives images from the frontend, processes them, and returns results. The React frontend allows users to select and upload an image, receiving and displaying the backend's response.
+<h3 align="center">TagScan</h3>
 
-## Project Structure
+  <p align="center">
+    AI-powered cloth tag reader with Flask backend and React frontend.
+    <br />
+     <a href="https://github.com/tridibbanik17/tagscan">github.com/tridibbanik17/tagscan</a>
+  </p>
+</div>
 
-- **Backend (Flask)**:  
-  The Flask backend provides an API endpoint (`/process`) that accepts image files, processes them, and returns results.
+## Table of Contents
 
-- **Frontend (React)**:  
-  The React frontend allows users to select an image from their local system and send it to the backend for processing.
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#key-features">Key Features</a></li>
+      </ul>
+    </li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-## Requirements
+## About The Project
+
+TagScan is an AI-powered cloth tag reader that utilizes a Flask backend and a React frontend. The backend processes image uploads, leveraging the Gemini API to identify laundry tags and interpret their symbols. The React frontend provides a user interface for image selection and upload, displaying the backend's analysis of the tag.
+
+### Key Features
+
+- **Image Upload and Processing:** Allows users to upload images of laundry tags for analysis.
+- **AI-Powered Tag Recognition:** Uses the Gemini API to identify laundry tags and decode the meaning of each symbol.
+- **Flask Backend:** Provides an API endpoint for handling image uploads and processing.
+- **React Frontend:** Offers a user-friendly interface for interacting with the backend.
+- **CORS Support:** Enables cross-origin requests, allowing the frontend and backend to run on different ports.
+
+## Architecture
+
+The project consists of two main components:
+
+- **Frontend (React):**  The React frontend allows users to select an image from their local system and send it to the backend for processing. It uses `axios` for making HTTP requests. Key files include:
+    - `src/App.jsx`:  Handles image selection, upload, and display of results.
+    - `src/main.jsx`:  Entry point for the React application.
+- **Backend (Flask):**  The Flask backend provides an API endpoint (`/process`) that accepts image files, processes them using the Gemini API, and returns the results. It uses `flask-cors` to handle cross-origin requests. Key files include:
+    - `backend.py` or `testFullStack/backend/flask_file.py`: Defines the Flask application and API endpoints.
+    - `testFullStack/backend/egbackendpyfile.py`: Contains the `get_tag_info` function, which uses the Gemini API to process the image.
+
+## Getting Started
+
+To get started with the project, follow these steps:
+
+### Prerequisites
 
 - Python 3.x
 - Node.js (for React frontend)
 - Flask
 - Flask-CORS (for handling cross-origin requests)
 - Axios (for making HTTP requests in React)
+- Google Gemini API key
 
-### Backend (Flask) Setup
+### Installation
 
-1. Install the required Python dependencies:
+1.  **Backend (Flask) Setup:**
 
-   ```bash
-   pip install Flask flask-cors
-   ```
-
-
-2. Run the Flask backend by executing the following:
+    Install the required Python dependencies:
 
     ```bash
-        python app.py
+    pip install Flask flask-cors google-generativeai Pillow
     ```
 
-The backend will start on http://localhost:5000.
+2.  Set the Gemini API key as an environment variable.
 
-Frontend (React) Setup
-Ensure you have Node.js installed. If not, download and install it from here.
+3.  Run the Flask backend:
 
-3. Install the necessary frontend dependencies:
+    Navigate to the backend directory (either `tridibbanik17-tagscan` or `tridibbanik17-tagscan/testFullStack/backend`) and execute:
 
     ```bash
-        npm install axios
-      ```
+    python backend.py  # or python flask_file.py
+    ```
 
-4. Start the React development server by running:
+    The backend will start on `http://localhost:5000`.
 
-```bash
+4.  **Frontend (React) Setup:**
+
+    Ensure you have Node.js installed.
+
+5.  Install the necessary frontend dependencies:
+
+    Navigate to the frontend directory (`tridibbanik17-tagscan/testFullStack/frontend`) and run:
+
+    ```bash
+    npm install axios
+    ```
+
+6.  Start the React development server:
+
+    ```bash
     npm start
-```
+    # or
+    npm run dev
+    ```
 
-The frontend will be available at http://localhost:3000.
+    The frontend will be available at `http://localhost:3000`.
 
-Backend Details
-File Upload Handling:
-The Flask backend has an endpoint /process which accepts POST requests with an image file attached. The image is saved to the server in the uploads folder, and the process_image function simulates processing (you can replace this with actual image processing logic as needed).
+7.  **Using the Application:**
 
-CORS:
-Cross-Origin Resource Sharing (CORS) is enabled to allow the React frontend (running on a different port) to interact with the backend without running into CORS issues.
+    - Open the frontend in your browser.
+    - Select an image file and click "Upload Image."
+    - The result of the image processing will be displayed below the button.
 
-API Response:
-The backend returns a JSON response containing the result of the image processing (currently a message indicating successful image detection).
+## Acknowledgments
 
-Backend Code Example:
-```python
-    from flask import Flask, request, jsonify
-    from flask_cors import CORS
-    import os 
-    from egbackendpyfile import process_image
-
-    app = Flask(__name__)
-    CORS(app)
-
-    UPLOAD_FOLDER = 'uploads'
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-    @app.route('/process', methods=['POST'])
-    def process():
-        if 'image' not in request.files:
-            return jsonify({"error": "No image provided"}), 400
-        
-        image_file = request.files['image']
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_file.filename)
-        image_file.save(image_path)
-        
-        result = process_image(image_path)
-        return jsonify({"result": result})
-
-    if __name__ == '__main__':
-        app.run(debug=True)
-```
-
-Frontend Details
-Image Upload:
-The React app includes a simple interface where users can select an image file and upload it to the Flask backend. The uploaded image is sent as a FormData object via a POST request to http://localhost:5000/process.
-
-Displaying Results:
-After receiving the response from the backend, the result is displayed on the page.
-
-Frontend Code Example:
-```javascript
-
-    import React, { useState } from 'react';
-    import axios from 'axios';
-
-    function App() {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [responseMessage, setResponseMessage] = useState('');
-
-    const handleFileChange = (event) => { 
-        setSelectedFile(event.target.files[0]);
-    };
-
-    const handleUpload = async () => {
-        if (!selectedFile) {
-        setResponseMessage('Please select an image to upload.');
-        return;
-        }
-
-        const formData = new FormData();
-        formData.append('image', selectedFile);
-
-        try {
-        const response = await axios.post('http://localhost:5000/process', formData, {
-            headers: {
-            'Content-Type': 'multipart/form-data'
-            }
-        });
-        setResponseMessage(response.data.result);
-        } catch (error) {
-        console.error('Error uploading image:', error);
-        setResponseMessage('Error processing image.');
-        }
-    };
-
-    return (
-        <div>
-        <h1>Image Upload Processor</h1>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload Image</button>
-        <p>{responseMessage}</p>
-        </div>
-    );
-    }
-
-export default App;
-```
-
-How to Use
-Start the Flask backend by changing the directory to backend and running python flask_file.py.
-
-To change directory to backend, use:
-```bash
-  cd ./techFullStack/backend/
-```
-
-To run flask_file.py:
-```bash
-  python flask_file.py
-```
-
-Start the React frontend by changing directory to frontend and running npm start and npm run dev.
-
-To change directory to frontend, use:
-```bash
-  cd ../frontend
-```
-
-Run npm start:
-```bash 
-  npm start
-```
-
-Run npm run dev:
-```bash
-  npm run dev
-```
-
-Click on the URL (for example, http://localhost:3000) displayed in the terminal, which will open the frontend in your browser.
-
-Select an image file and click "Upload Image."
-The result of the image processing will be displayed below the button.
-
-Future Enhancements
-Image Processing:
-Replace the process_image function with actual image processing logic (e.g., integrating Gemini API or other image analysis tools).
-
-Error Handling:
-Improve error handling in both the frontend and backend for better user experience and robustness.
+- This README was created using [gitreadme.dev](https://gitreadme.dev) — an AI tool that looks at your entire codebase to instantly generate high-quality README files.
+- The project utilizes the Gemini API for image analysis.
